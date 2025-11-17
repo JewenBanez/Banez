@@ -1,0 +1,59 @@
+
+    1  ls
+    2  cd documents
+    3  cd ..
+    4  cd documents
+    5  ls
+    6  -al
+    7  ls -al
+    8  mkdir banez
+    9  mkdir Banez
+   10  cd Banez
+   11  ls
+   12  touch text.txt
+   13  ls
+   14  touch readme.md
+   15  ls
+   16  rm test.txt
+   17  ls
+   18  rm text.txt
+   19  rm test.txt
+   20  ls
+   21  start readme.md
+   22  git config --global user.name "Banez"
+   23  git config --global user.email "jewenbanez07@gmail.com"
+   24  git config --global user.email
+   25  git config --global user.name
+   26  git init
+   27  ls -al
+   28  cd .git
+   29  ls
+   30  cd ..
+   31  git status
+   32  git add .
+   33  git status
+   34  git commit -m "first commit "
+   35  git branch -M main
+   36  git remote add origin
+   37  git remote add origin https://github.com/JewenBanez/Banez.git
+   38  git push -u origin main
+   39  start readme.md
+   40  git add .
+   41  git status
+   42  git commit -m "second commit"
+   43  git push
+   44  get status
+   45  get status
+   46  ls
+   47  start readme.md
+   48  get status
+   49  git status
+   50  git add .
+   51  git status
+   52  git commit -m "second commit"
+   53  git push
+   54  cd ..
+   55  git clone url https://github.com/JewenBanez/Banez.git
+   56  git clone https://github.com/JewenBanez/Banez.git
+   57  cd Banez
+   58  history
