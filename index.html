@@ -1,89 +1,164 @@
-import React, { useState, useEffect } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-export default function Clock() {
-  const [time, setTime] = useState(new Date());
+        .clock-container {
+            text-align: center;
+        }
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
+        .analog-clock {
+            width: 300px;
+            height: 300px;
+            border: 8px solid white;
+            border-radius: 50%;
+            position: relative;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 30px;
+        }
 
-    return () => clearInterval(timer);
-  }, []);
+        .center-dot {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
 
-  const formatTime = (date) => {
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    
-    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-    
-    return { hours, minutes: formattedMinutes, ampm };
-  };
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            background: #333;
+            border-radius: 10px;
+        }
 
-  const formatDate = (date) => {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    
-    const dayName = days[date.getDay()];
-    const monthName = months[date.getMonth()];
-    const day = date.getDate();
-    
-    return `${dayName}, ${monthName} ${day}`;
-  };
+        .hour-hand {
+            width: 6px;
+            height: 80px;
+            margin-left: -3px;
+        }
 
-  const { hours, minutes, ampm } = formatTime(time);
-  const dateString = formatDate(time);
+        .minute-hand {
+            width: 4px;
+            height: 110px;
+            margin-left: -2px;
+        }
 
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
-      <div className="text-center px-8">
-        {/* Time Display */}
-        <div className="mb-6">
-          <div className="flex items-center justify-center">
-            <span className="text-9xl font-extralight text-white tracking-tight">
-              {hours}:{minutes}
-            </span>
-            <span className="text-4xl font-light text-gray-400 ml-4 mt-8">
-              {ampm}
-            </span>
-          </div>
+        .second-hand {
+            width: 2px;
+            height: 120px;
+            margin-left: -1px;
+            background: #e74c3c;
+        }
+
+        .number {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .digital-time {
+            font-size: 48px;
+            color: white;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .date {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 10px;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="analog-clock" id="analogClock">
+            <div class="hand hour-hand" id="hourHand"></div>
+            <div class="hand minute-hand" id="minuteHand"></div>
+            <div class="hand second-hand" id="secondHand"></div>
+            <div class="center-dot"></div>
         </div>
-
-        {/* Date Display */}
-        <div className="text-3xl font-light text-gray-400 mb-12">
-          {dateString}
-        </div>
-
-        {/* Decorative Elements */}
-        <div className="flex justify-center gap-2 mb-8">
-          <div className="w-2 h-2 rounded-full bg-white opacity-30"></div>
-          <div className="w-2 h-2 rounded-full bg-white opacity-50"></div>
-          <div className="w-2 h-2 rounded-full bg-white opacity-70"></div>
-        </div>
-
-        {/* Subtle time indicators */}
-        <div className="grid grid-cols-2 gap-8 max-w-md mx-auto">
-          <div className="bg-white bg-opacity-5 backdrop-blur-sm rounded-2xl p-6 border border-white border-opacity-10">
-            <div className="text-gray-500 text-sm mb-2">Hours</div>
-            <div className="text-white text-3xl font-light">{hours}</div>
-          </div>
-          <div className="bg-white bg-opacity-5 backdrop-blur-sm rounded-2xl p-6 border border-white border-opacity-10">
-            <div className="text-gray-500 text-sm mb-2">Minutes</div>
-            <div className="text-white text-3xl font-light">{minutes}</div>
-          </div>
-        </div>
-
-        {/* Seconds Display */}
-        <div className="mt-8">
-          <div className="text-gray-600 text-lg">
-            {time.getSeconds() < 10 ? '0' + time.getSeconds() : time.getSeconds()} seconds
-          </div>
-        </div>
-      </div>
+        <div class="digital-time" id="digitalTime"></div>
+        <div class="date" id="date"></div>
     </div>
-  );
-}
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Analog clock
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            
+            const hourDeg = (hours * 30) + (minutes * 0.5);
+            const minuteDeg = (minutes * 6) + (seconds * 0.1);
+            const secondDeg = seconds * 6;
+            
+            document.getElementById('hourHand').style.transform = `rotate(${hourDeg}deg)`;
+            document.getElementById('minuteHand').style.transform = `rotate(${minuteDeg}deg)`;
+            document.getElementById('secondHand').style.transform = `rotate(${secondDeg}deg)`;
+            
+            // Digital time
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('digitalTime').textContent = timeString;
+            
+            // Date
+            const dateString = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('date').textContent = dateString;
+        }
+        
+        // Add clock numbers
+        const clock = document.getElementById('analogClock');
+        for (let i = 1; i <= 12; i++) {
+            const number = document.createElement('div');
+            number.className = 'number';
+            number.textContent = i;
+            const angle = (i * 30 - 90) * (Math.PI / 180);
+            const radius = 120;
+            const x = 150 + radius * Math.cos(angle);
+            const y = 150 + radius * Math.sin(angle);
+            number.style.left = `${x - 10}px`;
+            number.style.top = `${y - 10}px`;
+            clock.appendChild(number);
+        }
+        
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
